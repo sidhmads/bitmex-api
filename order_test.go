@@ -2,7 +2,7 @@ package bitmex
 
 import (
 	"encoding/json"
-	"github.com/frankrap/bitmex-api/swagger"
+	"github.com/alunir/bitmex-api/swagger"
 	"testing"
 )
 

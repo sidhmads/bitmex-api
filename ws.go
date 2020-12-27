@@ -6,7 +6,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"github.com/frankrap/bitmex-api/swagger"
+	"github.com/alunir/bitmex-api/swagger"
 	"github.com/gorilla/websocket"
 	"github.com/pkg/errors"
 	"github.com/tidwall/gjson"

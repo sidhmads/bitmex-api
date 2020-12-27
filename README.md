@@ -8,8 +8,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/frankrap/bitmex-api"
-	"github.com/frankrap/bitmex-api/swagger"
+	"github.com/alunir/bitmex-api"
+	"github.com/alunir/bitmex-api/swagger"
 	"log"
 )
 
