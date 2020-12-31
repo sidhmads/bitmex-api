@@ -6,7 +6,7 @@ require (
 	github.com/chuckpreslar/emission v0.0.0-20170206194824-a7ddd980baf9
 	github.com/gorilla/websocket v1.4.2
 	github.com/jpillora/backoff v1.0.0
-	github.com/micro/micro/v3 v3.0.4
+	github.com/asim/micro/v3 v3.0.4
 	github.com/pkg/errors v0.9.1
 	github.com/recws-org/recws v1.2.2
 	github.com/tidwall/gjson v1.6.7
