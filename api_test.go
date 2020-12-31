@@ -1,8 +1,8 @@
 package bitmex
 
 import (
-	"github.com/asim/go-micro/config"
-	"github.com/asim/go-micro/config/source/file"
+	"github.com/asim/go-micro/v2/config"
+	"github.com/asim/go-micro/v2/config/source/file"
 	"testing"
 )
 
