@@ -6,13 +6,14 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"log"
+	"net/url"
+	"time"
+
 	"github.com/alunir/bitmex-api/swagger"
 	"github.com/gorilla/websocket"
 	"github.com/pkg/errors"
 	"github.com/tidwall/gjson"
-	"log"
-	"net/url"
-	"time"
 )
 
 const (
@@ -282,7 +283,7 @@ func (b *BitMEX) StartWS() {
 
 			if resp.Success {
 				if b.debugMode {
-					log.Println(string(message))
+					log.Println("subscribe success: ", string(message))
 				}
 				continue
 			}
