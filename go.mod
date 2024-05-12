@@ -1,4 +1,4 @@
-module github.com/alunir/bitmex-api
+module github.com/t2o2/bitmex-api
 
 go 1.15
 

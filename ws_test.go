@@ -5,8 +5,8 @@ import (
 	"log"
 	"testing"
 
-	"github.com/alunir/bitmex-api/swagger"
-	"github.com/alunir/bitmex-api"
+	"github.com/t2o2/bitmex-api"
+	"github.com/t2o2/bitmex-api/swagger"
 )
 
 func testBitMeX() *BitMEX {
