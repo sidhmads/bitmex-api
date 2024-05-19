@@ -77,11 +77,14 @@ func (b *BitMEX) GetWallet() (wallet swagger.Wallet, err error) {
 	return
 }
 
-func (b *BitMEX) GetMargin() (margin swagger.Margin, err error) {
+func (b *BitMEX) GetMargin(ccy string) (margin swagger.Margin, err error) {
 	var response *http.Response
 
+	if ccy == "" {
+		ccy = "XBt"
+	}
 	params := map[string]interface{}{
-		//"currency": "XBt",
+		"currency": ccy,
 	}
 	margin, response, err = b.client.UserApi.UserGetMargin(b.ctx, params)
 	if err != nil {
