@@ -26,19 +26,24 @@ var (
 
 type ExecutionApiService service
 
-/* ExecutionApiService Get all raw executions for your account.
+/*
+	ExecutionApiService Get all raw executions for your account.
+
 This returns all raw transactions, which includes order opening and cancelation, and order status changes. It can be quite noisy. More focused information is available at &#x60;/execution/tradeHistory&#x60;.  You may also use the &#x60;filter&#x60; param to target your query. Specify an array as a filter value, such as &#x60;{\&quot;execType\&quot;: [\&quot;Settlement\&quot;, \&quot;Trade\&quot;]}&#x60; to filter on multiple values.  See [the FIX Spec](http://www.onixs.biz/fix-dictionary/5.0.SP2/msgType_8_8.html) for explanations of these fields.
 * @param ctx context.Context Authentication Context
 @param optional (nil or map[string]interface{}) with one or more of:
-    @param "symbol" (string) Instrument symbol. Send a bare series (e.g. XBU) to get data for the nearest expiring contract in that series.  You can also send a timeframe, e.g. &#x60;XBU:monthly&#x60;. Timeframes are &#x60;daily&#x60;, &#x60;weekly&#x60;, &#x60;monthly&#x60;, &#x60;quarterly&#x60;, and &#x60;biquarterly&#x60;.
-    @param "filter" (string) Generic table filter. Send JSON key/value pairs, such as &#x60;{\&quot;key\&quot;: \&quot;value\&quot;}&#x60;. You can key on individual fields, and do more advanced querying on timestamps. See the [Timestamp Docs](https://www.bitmex.com/app/restAPI#timestamp-filters) for more details.
-    @param "columns" (string) Array of column names to fetch. If omitted, will return all columns.  Note that this method will always return item keys, even when not specified, so you may receive more columns that you expect.
-    @param "count" (float32) Number of results to fetch.
-    @param "start" (float32) Starting point for results.
-    @param "reverse" (bool) If true, will sort results newest first.
-    @param "startTime" (time.Time) Starting date filter for results.
-    @param "endTime" (time.Time) Ending date filter for results.
-@return []Execution*/
+
+	@param "symbol" (string) Instrument symbol. Send a bare series (e.g. XBU) to get data for the nearest expiring contract in that series.  You can also send a timeframe, e.g. &#x60;XBU:monthly&#x60;. Timeframes are &#x60;daily&#x60;, &#x60;weekly&#x60;, &#x60;monthly&#x60;, &#x60;quarterly&#x60;, and &#x60;biquarterly&#x60;.
+	@param "filter" (string) Generic table filter. Send JSON key/value pairs, such as &#x60;{\&quot;key\&quot;: \&quot;value\&quot;}&#x60;. You can key on individual fields, and do more advanced querying on timestamps. See the [Timestamp Docs](https://www.bitmex.com/app/restAPI#timestamp-filters) for more details.
+	@param "columns" (string) Array of column names to fetch. If omitted, will return all columns.  Note that this method will always return item keys, even when not specified, so you may receive more columns that you expect.
+	@param "count" (float32) Number of results to fetch.
+	@param "start" (float32) Starting point for results.
+	@param "reverse" (bool) If true, will sort results newest first.
+	@param "startTime" (time.Time) Starting date filter for results.
+	@param "endTime" (time.Time) Ending date filter for results.
+
+@return []Execution
+*/
 func (a *ExecutionApiService) ExecutionGet(ctx context.Context, localVarOptionals map[string]interface{}) ([]Execution, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
@@ -184,18 +189,23 @@ func (a *ExecutionApiService) ExecutionGet(ctx context.Context, localVarOptional
 	return successPayload, localVarHttpResponse, err
 }
 
-/* ExecutionApiService Get all balance-affecting executions. This includes each trade, insurance charge, and settlement.
+/*
+	ExecutionApiService Get all balance-affecting executions. This includes each trade, insurance charge, and settlement.
+
 * @param ctx context.Context Authentication Context
 @param optional (nil or map[string]interface{}) with one or more of:
-    @param "symbol" (string) Instrument symbol. Send a bare series (e.g. XBU) to get data for the nearest expiring contract in that series.  You can also send a timeframe, e.g. &#x60;XBU:monthly&#x60;. Timeframes are &#x60;daily&#x60;, &#x60;weekly&#x60;, &#x60;monthly&#x60;, &#x60;quarterly&#x60;, and &#x60;biquarterly&#x60;.
-    @param "filter" (string) Generic table filter. Send JSON key/value pairs, such as &#x60;{\&quot;key\&quot;: \&quot;value\&quot;}&#x60;. You can key on individual fields, and do more advanced querying on timestamps. See the [Timestamp Docs](https://www.bitmex.com/app/restAPI#timestamp-filters) for more details.
-    @param "columns" (string) Array of column names to fetch. If omitted, will return all columns.  Note that this method will always return item keys, even when not specified, so you may receive more columns that you expect.
-    @param "count" (float32) Number of results to fetch.
-    @param "start" (float32) Starting point for results.
-    @param "reverse" (bool) If true, will sort results newest first.
-    @param "startTime" (time.Time) Starting date filter for results.
-    @param "endTime" (time.Time) Ending date filter for results.
-@return []Execution*/
+
+	@param "symbol" (string) Instrument symbol. Send a bare series (e.g. XBU) to get data for the nearest expiring contract in that series.  You can also send a timeframe, e.g. &#x60;XBU:monthly&#x60;. Timeframes are &#x60;daily&#x60;, &#x60;weekly&#x60;, &#x60;monthly&#x60;, &#x60;quarterly&#x60;, and &#x60;biquarterly&#x60;.
+	@param "filter" (string) Generic table filter. Send JSON key/value pairs, such as &#x60;{\&quot;key\&quot;: \&quot;value\&quot;}&#x60;. You can key on individual fields, and do more advanced querying on timestamps. See the [Timestamp Docs](https://www.bitmex.com/app/restAPI#timestamp-filters) for more details.
+	@param "columns" (string) Array of column names to fetch. If omitted, will return all columns.  Note that this method will always return item keys, even when not specified, so you may receive more columns that you expect.
+	@param "count" (float32) Number of results to fetch.
+	@param "start" (float32) Starting point for results.
+	@param "reverse" (bool) If true, will sort results newest first.
+	@param "startTime" (time.Time) Starting date filter for results.
+	@param "endTime" (time.Time) Ending date filter for results.
+
+@return []Execution
+*/
 func (a *ExecutionApiService) ExecutionGetTradeHistory(ctx context.Context, localVarOptionals map[string]interface{}) ([]Execution, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
@@ -256,7 +266,7 @@ func (a *ExecutionApiService) ExecutionGetTradeHistory(ctx context.Context, loca
 		localVarQueryParams.Add("reverse", parameterToString(localVarTempParam, ""))
 	}
 	if localVarTempParam, localVarOk := localVarOptionals["startTime"].(time.Time); localVarOk {
-		localVarQueryParams.Add("startTime", parameterToString(localVarTempParam, ""))
+		localVarQueryParams.Add("startTime", localVarTempParam.Format("2006-01-02T15:04:05.999Z"))
 	}
 	if localVarTempParam, localVarOk := localVarOptionals["endTime"].(time.Time); localVarOk {
 		localVarQueryParams.Add("endTime", parameterToString(localVarTempParam, ""))

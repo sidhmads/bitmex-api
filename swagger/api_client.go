@@ -16,6 +16,7 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
+	"go.uber.org/zap"
 	"golang.org/x/net/context"
 	"golang.org/x/oauth2"
 	"io"
@@ -180,7 +181,14 @@ func parameterToString(obj interface{}, collectionFormat string) string {
 
 // callAPI do the request.
 func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
-	return c.cfg.HTTPClient.Do(request)
+	rsp, err := c.cfg.HTTPClient.Do(request)
+	if rsp.StatusCode >= 300 {
+		zap.L().Info("REST Error",
+			zap.String("Url", request.URL.String()),
+			zap.String("Status", rsp.Status),
+		)
+	}
+	return rsp, err
 }
 
 // Change base path to allow switching to mocks

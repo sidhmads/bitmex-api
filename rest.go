@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/t2o2/bitmex-api/swagger"
+	"go.uber.org/zap"
 	"io/ioutil"
 	"net/http"
 	"sort"
@@ -337,6 +338,7 @@ func (b *BitMEX) PlaceOrder(side string, ordType string, stopPx float64, price f
 		params["execInst"] = execInst
 	}
 
+	// zap.L().Info("PlaceOrder OUT", zap.String("symbol", symbol), zap.Any("params", params))
 	order, response, err = b.client.OrderApi.OrderNew(b.ctx, symbol, params)
 	if err != nil {
 		// >= 300 代表有错误
@@ -344,6 +346,12 @@ func (b *BitMEX) PlaceOrder(side string, ordType string, stopPx float64, price f
 		// 503
 		// log.Printf("response.StatusCode: %v", response.StatusCode)
 		return
+	}
+	if response.StatusCode >= 300 {
+		zap.L().Info("PlaceOrder IN",
+			zap.String("symbol", symbol),
+			zap.Any("statusCode", response.StatusCode),
+			zap.Any("status", response.Status))
 	}
 	b.onResponse(response)
 	return
@@ -392,6 +400,7 @@ func (b *BitMEX) PlaceOrder2(side string, ordType string, stopPx float64, price 
 		params["execInst"] = execInst
 	}
 
+	zap.L().Info("PlaceOrder OUT", zap.String("symbol", symbol), zap.Any("params", params))
 	order, response, err = b.client.OrderApi.OrderNew(b.ctx, symbol, params)
 	if err != nil {
 		// >= 300 代表有错误
@@ -400,6 +409,7 @@ func (b *BitMEX) PlaceOrder2(side string, ordType string, stopPx float64, price 
 		// log.Printf("response.StatusCode: %v", response.StatusCode)
 		return
 	}
+	zap.L().Info("PlaceOrder IN", zap.String("symbol", symbol), zap.Any("rsp", response))
 	b.onResponse(response)
 	return
 }
@@ -572,6 +582,50 @@ func (b *BitMEX) CloseOrder(side string, ordType string, price float64, orderQty
 	}
 	b.onResponse(response)
 	return
+}
+
+func (b *BitMEX) GetTradeHistoryByCount(symbol string, count int) (trades []swagger.Execution, err error) {
+	var response *http.Response
+
+	params := map[string]interface{}{}
+	params["symbol"] = symbol
+	params["count"] = float32(count)
+	params["reverse"] = true
+
+	ctx := b.ctx
+	trades, response, err = b.client.ExecutionApi.ExecutionGetTradeHistory(ctx, params)
+	if err != nil {
+		return
+	}
+	b.onResponse(response)
+	return
+}
+
+func (b *BitMEX) GetTradeHistoryAfter(symbol string, startTime time.Time) ([]swagger.Execution, error) {
+	params := map[string]interface{}{}
+	params["symbol"] = symbol
+	params["count"] = float32(500)
+	params["reverse"] = false
+
+	executions := []swagger.Execution{}
+	ctx := b.ctx
+
+	params["startTime"] = startTime
+
+	for {
+		execs, response, err := b.client.ExecutionApi.ExecutionGetTradeHistory(ctx, params)
+		if err != nil {
+			return execs, err
+		}
+		if len(execs) == 0 {
+			break
+		}
+		params["startTime"] = execs[len(execs)-1].Timestamp.Add(time.Duration(1 * time.Millisecond))
+		executions = append(executions, execs...)
+		b.onResponse(response)
+		time.Sleep(1 * time.Second)
+	}
+	return executions, nil
 }
 
 func (b *BitMEX) GetInstrument(symbol string, count int, reverse bool) (result []swagger.Instrument, err error) {
