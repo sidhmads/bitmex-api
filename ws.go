@@ -12,7 +12,7 @@ import (
 
 	"github.com/gorilla/websocket"
 	"github.com/pkg/errors"
-	"github.com/t2o2/bitmex-api/swagger"
+	"github.com/sidhmads/bitmex-api/swagger"
 	"github.com/tidwall/gjson"
 )
 

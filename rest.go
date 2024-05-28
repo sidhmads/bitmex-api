@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/t2o2/bitmex-api/swagger"
+	"github.com/sidhmads/bitmex-api/swagger"
 	"go.uber.org/zap"
 	"io/ioutil"
 	"net/http"
