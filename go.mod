@@ -1,4 +1,4 @@
-module github.com/t2o2/bitmex-api
+module github.com/sidhmads/bitmex-api
 
 go 1.22
 
