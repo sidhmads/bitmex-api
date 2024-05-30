@@ -235,6 +235,21 @@ func (b *BitMEX) subscribeHandler() error {
 	return b.sendWSMessage(*b.subscribeCmd)
 }
 
+func (b *BitMEX) startChannelHandler(fn func(msg *Response) (err error), channel chan *Response) {
+	for {
+		select {
+		case resp := <-channel:
+			fn(resp)
+		}
+	}
+}
+
+func (b *BitMEX) startChannelHandlers() {
+	go b.startChannelHandler(b.processOrderbook, b.orderbookUpdateChan)
+	go b.startChannelHandler(b.processOrderbook25, b.orderbookL25UpdateChan)
+	go b.startChannelHandler(b.processOrder, b.orderUpdateChan)
+}
+
 // StartWS opens the websocket connection, and waits for message events
 func (b *BitMEX) StartWS() {
 	u := url.URL{Scheme: "wss", Host: b.host, Path: "/realtime"}
@@ -257,6 +272,8 @@ func (b *BitMEX) StartWS() {
 			}
 		}
 	}()
+
+	b.startChannelHandlers()
 
 	go func() {
 		for {
@@ -290,27 +307,27 @@ func (b *BitMEX) StartWS() {
 
 			switch resp.Table {
 			case BitmexWSInstrument:
-				b.processInstrument(&resp)
+				go b.processInstrument(&resp)
 			case BitmexWSOrderBookL2_25:
-				b.processOrderbook25(&resp)
+				b.orderbookL25UpdateChan <- &resp
 			case BitmexWSOrderBookL2:
-				b.processOrderbook(&resp)
+				b.orderbookUpdateChan <- &resp
 			case BitmexWSQuote:
-				b.processQuote(&resp)
+				go b.processQuote(&resp)
 			case BitmexWSTradeBin1m, BitmexWSTradeBin5m, BitmexWSTradeBin1h, BitmexWSTradeBin1d:
-				b.processTradeBin(&resp, resp.Table)
+				go b.processTradeBin(&resp, resp.Table)
 			case BitmexWSTrade:
-				b.processTrade(&resp)
+				go b.processTrade(&resp)
 			case BitmexWSExecution:
-				b.processExecution(&resp)
+				go b.processExecution(&resp)
 			case BitmexWSOrder:
-				b.processOrder(&resp)
+				b.orderUpdateChan <- &resp
 			case BitmexWSMargin:
-				b.processMargin(&resp)
+				go b.processMargin(&resp)
 			case BitmexWSPosition:
-				b.processPosition(&resp)
+				go b.processPosition(&resp)
 			case BitmexWSWallet:
-				b.processWallet(&resp)
+				go b.processWallet(&resp)
 			default:
 				if resp.Subscribe != "" {
 					if b.debugMode {

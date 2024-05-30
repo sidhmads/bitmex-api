@@ -2,18 +2,20 @@ package bitmex
 
 import (
 	"context"
-	"github.com/chuckpreslar/emission"
-	"github.com/sidhmads/bitmex-api/recws"
-	"golang.org/x/net/proxy"
 	"log"
 	"net"
 	"time"
 
+	"github.com/chuckpreslar/emission"
+	"github.com/sidhmads/bitmex-api/recws"
+	"golang.org/x/net/proxy"
+
 	//"github.com/recws-org/recws"
-	"github.com/sidhmads/bitmex-api/swagger"
 	"net/http"
 	"net/url"
 	"sync"
+
+	"github.com/sidhmads/bitmex-api/swagger"
 )
 
 const (
@@ -45,12 +47,15 @@ type BitMEX struct {
 	rateLimitPublic      RateLimit
 	rateLimit            RateLimit
 
-	ws              recws.RecConn
-	emitter         *emission.Emitter
-	subscribeCmd    *WSCmd
-	orderBookLocals map[string]*OrderBookLocal // key: symbol
-	orderLocals     map[string]*swagger.Order  // key: OrderID
-	orderBookLoaded map[string]bool            // key: symbol
+	ws                     recws.RecConn
+	emitter                *emission.Emitter
+	subscribeCmd           *WSCmd
+	orderBookLocals        map[string]*OrderBookLocal // key: symbol
+	orderLocals            map[string]*swagger.Order  // key: OrderID
+	orderBookLoaded        map[string]bool            // key: symbol
+	orderbookUpdateChan    chan *Response
+	orderbookL25UpdateChan chan *Response
+	orderUpdateChan        chan *Response
 }
 
 // New allows the use of the public or private and websocket api
@@ -78,6 +83,9 @@ func New(httpClient *http.Client, host string, key string, secret string, debugM
 	b.httpClient = httpClient
 	b.cfg.HTTPClient = httpClient
 	b.client = swagger.NewAPIClient(b.cfg)
+	b.orderUpdateChan = make(chan *Response, 60)
+	b.orderbookUpdateChan = make(chan *Response, 60)
+	b.orderbookL25UpdateChan = make(chan *Response, 60)
 	return b
 }
 
