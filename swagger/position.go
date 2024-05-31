@@ -12,189 +12,196 @@ package swagger
 
 import (
 	"time"
+
+	"go.uber.org/zap/zapcore"
 )
 
 // Summary of Open and Closed Positions
 type Position struct {
-	Account float32 `json:"account"`
-
-	Symbol string `json:"symbol"`
-
-	Currency string `json:"currency"`
-
-	Underlying string `json:"underlying,omitempty"`
-
-	QuoteCurrency string `json:"quoteCurrency,omitempty"`
-
-	Commission float64 `json:"commission,omitempty"`
-
-	InitMarginReq float64 `json:"initMarginReq,omitempty"`
-
-	MaintMarginReq float64 `json:"maintMarginReq,omitempty"`
-
-	RiskLimit float32 `json:"riskLimit,omitempty"`
-
-	Leverage float64 `json:"leverage,omitempty"`
-
-	CrossMargin bool `json:"crossMargin,omitempty"`
-
-	DeleveragePercentile float64 `json:"deleveragePercentile,omitempty"`
-
-	RebalancedPnl float32 `json:"rebalancedPnl,omitempty"`
-
-	PrevRealisedPnl float32 `json:"prevRealisedPnl,omitempty"`
-
-	PrevUnrealisedPnl float32 `json:"prevUnrealisedPnl,omitempty"`
-
-	PrevClosePrice float64 `json:"prevClosePrice,omitempty"`
-
-	OpeningTimestamp time.Time `json:"openingTimestamp,omitempty"`
-
-	OpeningQty float32 `json:"openingQty,omitempty"`
-
-	OpeningCost float32 `json:"openingCost,omitempty"`
-
-	OpeningComm float32 `json:"openingComm,omitempty"`
-
-	OpenOrderBuyQty float32 `json:"openOrderBuyQty,omitempty"`
-
-	OpenOrderBuyCost float32 `json:"openOrderBuyCost,omitempty"`
-
-	OpenOrderBuyPremium float32 `json:"openOrderBuyPremium,omitempty"`
-
-	OpenOrderSellQty float32 `json:"openOrderSellQty,omitempty"`
-
-	OpenOrderSellCost float32 `json:"openOrderSellCost,omitempty"`
-
-	OpenOrderSellPremium float32 `json:"openOrderSellPremium,omitempty"`
-
-	ExecBuyQty float32 `json:"execBuyQty,omitempty"`
-
-	ExecBuyCost float32 `json:"execBuyCost,omitempty"`
-
-	ExecSellQty float32 `json:"execSellQty,omitempty"`
-
-	ExecSellCost float32 `json:"execSellCost,omitempty"`
-
-	ExecQty float32 `json:"execQty,omitempty"`
-
-	ExecCost float32 `json:"execCost,omitempty"`
-
-	ExecComm float32 `json:"execComm,omitempty"`
-
-	CurrentTimestamp time.Time `json:"currentTimestamp,omitempty"`
-
-	CurrentQty float32 `json:"currentQty,omitempty"`
-
-	CurrentCost float32 `json:"currentCost,omitempty"`
-
-	CurrentComm float32 `json:"currentComm,omitempty"`
-
-	RealisedCost float32 `json:"realisedCost,omitempty"`
-
-	UnrealisedCost float32 `json:"unrealisedCost,omitempty"`
-
-	GrossOpenCost float32 `json:"grossOpenCost,omitempty"`
-
-	GrossOpenPremium float32 `json:"grossOpenPremium,omitempty"`
-
-	GrossExecCost float32 `json:"grossExecCost,omitempty"`
-
-	IsOpen bool `json:"isOpen,omitempty"`
-
-	MarkPrice float64 `json:"markPrice,omitempty"`
-
-	MarkValue float32 `json:"markValue,omitempty"`
-
-	RiskValue float32 `json:"riskValue,omitempty"`
-
-	HomeNotional float64 `json:"homeNotional,omitempty"`
-
-	ForeignNotional float64 `json:"foreignNotional,omitempty"`
-
-	PosState string `json:"posState,omitempty"`
-
-	PosCost float32 `json:"posCost,omitempty"`
-
-	PosCost2 float32 `json:"posCost2,omitempty"`
-
-	PosCross float32 `json:"posCross,omitempty"`
-
-	PosInit float32 `json:"posInit,omitempty"`
-
-	PosComm float32 `json:"posComm,omitempty"`
-
-	PosLoss float32 `json:"posLoss,omitempty"`
-
-	PosMargin float32 `json:"posMargin,omitempty"`
-
-	PosMaint float32 `json:"posMaint,omitempty"`
-
-	PosAllowance float32 `json:"posAllowance,omitempty"`
-
-	TaxableMargin float32 `json:"taxableMargin,omitempty"`
-
-	InitMargin float32 `json:"initMargin,omitempty"`
-
-	MaintMargin float32 `json:"maintMargin,omitempty"`
-
-	SessionMargin float32 `json:"sessionMargin,omitempty"`
-
-	TargetExcessMargin float32 `json:"targetExcessMargin,omitempty"`
-
-	VarMargin float32 `json:"varMargin,omitempty"`
-
-	RealisedGrossPnl float32 `json:"realisedGrossPnl,omitempty"`
-
-	RealisedTax float32 `json:"realisedTax,omitempty"`
-
-	RealisedPnl float32 `json:"realisedPnl,omitempty"`
-
-	UnrealisedGrossPnl float32 `json:"unrealisedGrossPnl,omitempty"`
-
-	LongBankrupt float32 `json:"longBankrupt,omitempty"`
-
-	ShortBankrupt float32 `json:"shortBankrupt,omitempty"`
-
-	TaxBase float32 `json:"taxBase,omitempty"`
-
-	IndicativeTaxRate float64 `json:"indicativeTaxRate,omitempty"`
-
-	IndicativeTax float32 `json:"indicativeTax,omitempty"`
-
-	UnrealisedTax float32 `json:"unrealisedTax,omitempty"`
-
-	UnrealisedPnl float32 `json:"unrealisedPnl,omitempty"`
-
-	UnrealisedPnlPcnt float64 `json:"unrealisedPnlPcnt,omitempty"`
-
-	UnrealisedRoePcnt float64 `json:"unrealisedRoePcnt,omitempty"`
-
-	SimpleQty float64 `json:"simpleQty,omitempty"`
-
-	SimpleCost float64 `json:"simpleCost,omitempty"`
-
-	SimpleValue float64 `json:"simpleValue,omitempty"`
-
-	SimplePnl float64 `json:"simplePnl,omitempty"`
-
-	SimplePnlPcnt float64 `json:"simplePnlPcnt,omitempty"`
-
-	AvgCostPrice float64 `json:"avgCostPrice,omitempty"`
-
-	AvgEntryPrice float64 `json:"avgEntryPrice,omitempty"`
-
-	BreakEvenPrice float64 `json:"breakEvenPrice,omitempty"`
-
-	MarginCallPrice float64 `json:"marginCallPrice,omitempty"`
-
-	LiquidationPrice float64 `json:"liquidationPrice,omitempty"`
-
-	BankruptPrice float64 `json:"bankruptPrice,omitempty"`
-
-	Timestamp time.Time `json:"timestamp,omitempty"`
-
-	LastPrice float64 `json:"lastPrice,omitempty"`
-
-	LastValue float32 `json:"lastValue,omitempty"`
+	Account              float32   `json:"account"`
+	Symbol               string    `json:"symbol"`
+	Currency             string    `json:"currency"`
+	Underlying           string    `json:"underlying,omitempty"`
+	QuoteCurrency        string    `json:"quoteCurrency,omitempty"`
+	Commission           float64   `json:"commission,omitempty"`
+	InitMarginReq        float64   `json:"initMarginReq,omitempty"`
+	MaintMarginReq       float64   `json:"maintMarginReq,omitempty"`
+	RiskLimit            float32   `json:"riskLimit,omitempty"`
+	Leverage             float64   `json:"leverage,omitempty"`
+	CrossMargin          bool      `json:"crossMargin,omitempty"`
+	DeleveragePercentile float64   `json:"deleveragePercentile,omitempty"`
+	RebalancedPnl        float32   `json:"rebalancedPnl,omitempty"`
+	PrevRealisedPnl      float32   `json:"prevRealisedPnl,omitempty"`
+	PrevUnrealisedPnl    float32   `json:"prevUnrealisedPnl,omitempty"`
+	PrevClosePrice       float64   `json:"prevClosePrice,omitempty"`
+	OpeningTimestamp     time.Time `json:"openingTimestamp,omitempty"`
+	OpeningQty           float32   `json:"openingQty,omitempty"`
+	OpeningCost          float32   `json:"openingCost,omitempty"`
+	OpeningComm          float32   `json:"openingComm,omitempty"`
+	OpenOrderBuyQty      float32   `json:"openOrderBuyQty,omitempty"`
+	OpenOrderBuyCost     float32   `json:"openOrderBuyCost,omitempty"`
+	OpenOrderBuyPremium  float32   `json:"openOrderBuyPremium,omitempty"`
+	OpenOrderSellQty     float32   `json:"openOrderSellQty,omitempty"`
+	OpenOrderSellCost    float32   `json:"openOrderSellCost,omitempty"`
+	OpenOrderSellPremium float32   `json:"openOrderSellPremium,omitempty"`
+	ExecBuyQty           float32   `json:"execBuyQty,omitempty"`
+	ExecBuyCost          float32   `json:"execBuyCost,omitempty"`
+	ExecSellQty          float32   `json:"execSellQty,omitempty"`
+	ExecSellCost         float32   `json:"execSellCost,omitempty"`
+	ExecQty              float32   `json:"execQty,omitempty"`
+	ExecCost             float32   `json:"execCost,omitempty"`
+	ExecComm             float32   `json:"execComm,omitempty"`
+	CurrentTimestamp     time.Time `json:"currentTimestamp,omitempty"`
+	CurrentQty           float32   `json:"currentQty,omitempty"`
+	CurrentCost          float32   `json:"currentCost,omitempty"`
+	CurrentComm          float32   `json:"currentComm,omitempty"`
+	RealisedCost         float32   `json:"realisedCost,omitempty"`
+	UnrealisedCost       float32   `json:"unrealisedCost,omitempty"`
+	GrossOpenCost        float32   `json:"grossOpenCost,omitempty"`
+	GrossOpenPremium     float32   `json:"grossOpenPremium,omitempty"`
+	GrossExecCost        float32   `json:"grossExecCost,omitempty"`
+	IsOpen               bool      `json:"isOpen,omitempty"`
+	MarkPrice            float64   `json:"markPrice,omitempty"`
+	MarkValue            float32   `json:"markValue,omitempty"`
+	RiskValue            float32   `json:"riskValue,omitempty"`
+	HomeNotional         float64   `json:"homeNotional,omitempty"`
+	ForeignNotional      float64   `json:"foreignNotional,omitempty"`
+	PosState             string    `json:"posState,omitempty"`
+	PosCost              float32   `json:"posCost,omitempty"`
+	PosCost2             float32   `json:"posCost2,omitempty"`
+	PosCross             float32   `json:"posCross,omitempty"`
+	PosInit              float32   `json:"posInit,omitempty"`
+	PosComm              float32   `json:"posComm,omitempty"`
+	PosLoss              float32   `json:"posLoss,omitempty"`
+	PosMargin            float32   `json:"posMargin,omitempty"`
+	PosMaint             float32   `json:"posMaint,omitempty"`
+	PosAllowance         float32   `json:"posAllowance,omitempty"`
+	TaxableMargin        float32   `json:"taxableMargin,omitempty"`
+	InitMargin           float32   `json:"initMargin,omitempty"`
+	MaintMargin          float32   `json:"maintMargin,omitempty"`
+	SessionMargin        float32   `json:"sessionMargin,omitempty"`
+	TargetExcessMargin   float32   `json:"targetExcessMargin,omitempty"`
+	VarMargin            float32   `json:"varMargin,omitempty"`
+	RealisedGrossPnl     float32   `json:"realisedGrossPnl,omitempty"`
+	RealisedTax          float32   `json:"realisedTax,omitempty"`
+	RealisedPnl          float32   `json:"realisedPnl,omitempty"`
+	UnrealisedGrossPnl   float32   `json:"unrealisedGrossPnl,omitempty"`
+	LongBankrupt         float32   `json:"longBankrupt,omitempty"`
+	ShortBankrupt        float32   `json:"shortBankrupt,omitempty"`
+	TaxBase              float32   `json:"taxBase,omitempty"`
+	IndicativeTaxRate    float64   `json:"indicativeTaxRate,omitempty"`
+	IndicativeTax        float32   `json:"indicativeTax,omitempty"`
+	UnrealisedTax        float32   `json:"unrealisedTax,omitempty"`
+	UnrealisedPnl        float32   `json:"unrealisedPnl,omitempty"`
+	UnrealisedPnlPcnt    float64   `json:"unrealisedPnlPcnt,omitempty"`
+	UnrealisedRoePcnt    float64   `json:"unrealisedRoePcnt,omitempty"`
+	SimpleQty            float64   `json:"simpleQty,omitempty"`
+	SimpleCost           float64   `json:"simpleCost,omitempty"`
+	SimpleValue          float64   `json:"simpleValue,omitempty"`
+	SimplePnl            float64   `json:"simplePnl,omitempty"`
+	SimplePnlPcnt        float64   `json:"simplePnlPcnt,omitempty"`
+	AvgCostPrice         float64   `json:"avgCostPrice,omitempty"`
+	AvgEntryPrice        float64   `json:"avgEntryPrice,omitempty"`
+	BreakEvenPrice       float64   `json:"breakEvenPrice,omitempty"`
+	MarginCallPrice      float64   `json:"marginCallPrice,omitempty"`
+	LiquidationPrice     float64   `json:"liquidationPrice,omitempty"`
+	BankruptPrice        float64   `json:"bankruptPrice,omitempty"`
+	Timestamp            time.Time `json:"timestamp,omitempty"`
+	LastPrice            float64   `json:"lastPrice,omitempty"`
+	LastValue            float32   `json:"lastValue,omitempty"`
+}
+
+func (position Position) MarshalLogObject(encoder zapcore.ObjectEncoder) error {
+	encoder.AddFloat32("account", position.Account)
+	encoder.AddFloat32("riskLimit", position.RiskLimit)
+	encoder.AddFloat32("rebalancedPnl", position.RebalancedPnl)
+	encoder.AddFloat32("prevRealisedPnl", position.PrevRealisedPnl)
+	encoder.AddFloat32("prevUnrealisedPnl", position.PrevUnrealisedPnl)
+	encoder.AddFloat32("openingQty", position.OpeningQty)
+	encoder.AddFloat32("openingCost", position.OpeningCost)
+	encoder.AddFloat32("openingComm", position.OpeningComm)
+	encoder.AddFloat32("openOrderBuyQty", position.OpenOrderBuyQty)
+	encoder.AddFloat32("openOrderBuyCost", position.OpenOrderBuyCost)
+	encoder.AddFloat32("openOrderBuyPremium", position.OpenOrderBuyPremium)
+	encoder.AddFloat32("openOrderSellQty", position.OpenOrderSellQty)
+	encoder.AddFloat32("openOrderSellCost", position.OpenOrderSellCost)
+	encoder.AddFloat32("openOrderSellPremium", position.OpenOrderSellPremium)
+	encoder.AddFloat32("execBuyQty", position.ExecBuyQty)
+	encoder.AddFloat32("execBuyCost", position.ExecBuyCost)
+	encoder.AddFloat32("execSellQty", position.ExecSellQty)
+	encoder.AddFloat32("execSellCost", position.ExecSellCost)
+	encoder.AddFloat32("execQty", position.ExecQty)
+	encoder.AddFloat32("execCost", position.ExecCost)
+	encoder.AddFloat32("execComm", position.ExecComm)
+	encoder.AddFloat32("currentQty", position.CurrentQty)
+	encoder.AddFloat32("currentCost", position.CurrentCost)
+	encoder.AddFloat32("currentComm", position.CurrentComm)
+	encoder.AddFloat32("realisedCost", position.RealisedCost)
+	encoder.AddFloat32("unrealisedCost", position.UnrealisedCost)
+	encoder.AddFloat32("grossOpenCost", position.GrossOpenCost)
+	encoder.AddFloat32("grossOpenPremium", position.GrossOpenPremium)
+	encoder.AddFloat32("grossExecCost", position.GrossExecCost)
+	encoder.AddFloat32("markValue", position.MarkValue)
+	encoder.AddFloat32("riskValue", position.RiskValue)
+	encoder.AddFloat32("posCost", position.PosCost)
+	encoder.AddFloat32("posCost2", position.PosCost2)
+	encoder.AddFloat32("posCross", position.PosCross)
+	encoder.AddFloat32("posInit", position.PosInit)
+	encoder.AddFloat32("posComm", position.PosComm)
+	encoder.AddFloat32("posLoss", position.PosLoss)
+	encoder.AddFloat32("posMargin", position.PosMargin)
+	encoder.AddFloat32("posMaint", position.PosMaint)
+	encoder.AddFloat32("posAllowance", position.PosAllowance)
+	encoder.AddFloat32("taxableMargin", position.TaxableMargin)
+	encoder.AddFloat32("initMargin", position.InitMargin)
+	encoder.AddFloat32("maintMargin", position.MaintMargin)
+	encoder.AddFloat32("sessionMargin", position.SessionMargin)
+	encoder.AddFloat32("targetExcessMargin", position.TargetExcessMargin)
+	encoder.AddFloat32("varMargin", position.VarMargin)
+	encoder.AddFloat32("realisedGrossPnl", position.RealisedGrossPnl)
+	encoder.AddFloat32("realisedTax", position.RealisedTax)
+	encoder.AddFloat32("realisedPnl", position.RealisedPnl)
+	encoder.AddFloat32("unrealisedGrossPnl", position.UnrealisedGrossPnl)
+	encoder.AddFloat32("longBankrupt", position.LongBankrupt)
+	encoder.AddFloat32("shortBankrupt", position.ShortBankrupt)
+	encoder.AddFloat32("taxBase", position.TaxBase)
+	encoder.AddFloat32("indicativeTax", position.IndicativeTax)
+	encoder.AddFloat32("unrealisedTax", position.UnrealisedTax)
+	encoder.AddFloat32("unrealisedPnl", position.UnrealisedPnl)
+	encoder.AddFloat32("lastValue", position.LastValue)
+	encoder.AddString("symbol", position.Symbol)
+	encoder.AddString("currency", position.Currency)
+	encoder.AddString("underlying", position.Underlying)
+	encoder.AddString("quoteCurrency", position.QuoteCurrency)
+	encoder.AddString("posState", position.PosState)
+	encoder.AddFloat64("commission", position.Commission)
+	encoder.AddFloat64("initMarginReq", position.InitMarginReq)
+	encoder.AddFloat64("maintMarginReq", position.MaintMarginReq)
+	encoder.AddFloat64("leverage", position.Leverage)
+	encoder.AddFloat64("deleveragePercentile", position.DeleveragePercentile)
+	encoder.AddFloat64("prevClosePrice", position.PrevClosePrice)
+	encoder.AddFloat64("markPrice", position.MarkPrice)
+	encoder.AddFloat64("homeNotional", position.HomeNotional)
+	encoder.AddFloat64("foreignNotional", position.ForeignNotional)
+	encoder.AddFloat64("indicativeTaxRate", position.IndicativeTaxRate)
+	encoder.AddFloat64("unrealisedPnlPcnt", position.UnrealisedPnlPcnt)
+	encoder.AddFloat64("unrealisedRoePcnt", position.UnrealisedRoePcnt)
+	encoder.AddFloat64("simpleQty", position.SimpleQty)
+	encoder.AddFloat64("simpleCost", position.SimpleCost)
+	encoder.AddFloat64("simpleValue", position.SimpleValue)
+	encoder.AddFloat64("simplePnl", position.SimplePnl)
+	encoder.AddFloat64("simplePnlPcnt", position.SimplePnlPcnt)
+	encoder.AddFloat64("avgCostPrice", position.AvgCostPrice)
+	encoder.AddFloat64("avgEntryPrice", position.AvgEntryPrice)
+	encoder.AddFloat64("breakEvenPrice", position.BreakEvenPrice)
+	encoder.AddFloat64("marginCallPrice", position.MarginCallPrice)
+	encoder.AddFloat64("liquidationPrice", position.LiquidationPrice)
+	encoder.AddFloat64("bankruptPrice", position.BankruptPrice)
+	encoder.AddFloat64("lastPrice", position.LastPrice)
+	encoder.AddTime("openingTimestamp", position.OpeningTimestamp)
+	encoder.AddTime("currentTimestamp", position.CurrentTimestamp)
+	encoder.AddTime("timestamp", position.Timestamp)
+	encoder.AddBool("crossMargin", position.CrossMargin)
+	encoder.AddBool("isOpen", position.IsOpen)
+	return nil
 }
