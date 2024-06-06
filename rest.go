@@ -4,13 +4,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/sidhmads/bitmex-api/swagger"
-	"go.uber.org/zap"
 	"io/ioutil"
 	"net/http"
 	"sort"
 	"strconv"
 	"time"
+
+	"github.com/sidhmads/bitmex-api/swagger"
+	"go.uber.org/zap"
 )
 
 const (
@@ -700,6 +701,7 @@ func (b *BitMEX) onResponse(response *http.Response) {
 	xLimit := response.Header.Get(`X-Ratelimit-Limit`)
 	xRemaining := response.Header.Get(`X-Ratelimit-Remaining`)
 	xReset := response.Header.Get(`X-Ratelimit-Reset`)
+	xReset1s := response.Header.Get(`X-Ratelimit-Remaining-1s`)
 
 	b.rateLimitMutex.Lock()
 	defer b.rateLimitMutex.Unlock()
@@ -712,5 +714,9 @@ func (b *BitMEX) onResponse(response *http.Response) {
 	}
 	if xReset != "" {
 		b.rateLimit.Reset, _ = strconv.ParseInt(xReset, 10, 64)
+	}
+
+	if xReset1s != "" {
+		b.rateLimit.Reset1s, _ = strconv.ParseInt(xReset1s, 10, 64)
 	}
 }
