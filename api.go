@@ -27,6 +27,7 @@ type RateLimit struct {
 	Limit     int64
 	Remaining int64
 	Reset     int64
+	Reset1s   int64
 }
 
 // BitMEX describes the API
